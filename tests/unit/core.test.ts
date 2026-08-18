@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { websiteConfig } from '@/config/website';
 import { localeMeta, localizedPath } from '@/lib/locale';
-import { absoluteSiteUrl, homeHead, siteOrigin } from '@/lib/seo';
+import { absoluteSiteUrl, homeHead } from '@/lib/seo';
 import { cn } from '@/lib/utils';
 
 describe('TanStarter Lite core contracts', () => {
@@ -16,9 +16,7 @@ describe('TanStarter Lite core contracts', () => {
 
   it('keeps the repository as the only external destination', () => {
     expect(websiteConfig.name).toBe('mel');
-    expect(websiteConfig.repository).toBe(
-      'https://github.com/keveon/melora'
-    );
+    expect(websiteConfig.repository).toBe('https://github.com/keveon/melora');
     expect(websiteConfig.themeStorageKey).toBeTruthy();
     expect(websiteConfig.manifest.startUrl).toBe('/');
   });
@@ -45,7 +43,7 @@ describe('TanStarter Lite core contracts', () => {
     });
     expect(head.meta).toContainEqual({
       property: 'og:image',
-      content: "https://melora.moe/og.png",
+      content: 'https://melora.moe/og.png',
     });
   });
 
