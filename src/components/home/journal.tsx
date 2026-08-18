@@ -31,10 +31,10 @@ export function Journal({ locale }: { locale: AppLocale }) {
           </div>
           <article
             aria-labelledby="journal-latest-title"
-            className="border-2 border-ink bg-surface p-7 shadow-[6px_6px_0_#171313] sm:p-9"
+            className="border-2 border-ink bg-paper p-7 shadow-[6px_6px_0_var(--ink)] dark:shadow-[6px_6px_0_var(--paper)] sm:p-9"
           >
             <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full border-2 border-ink bg-white px-3 py-1 text-sm font-bold">
+              <span className="inline-flex items-center gap-2 rounded-full border-2 border-ink bg-yellow px-3 py-1 text-sm font-bold">
                 {formatDate(latest.date, locale)}
               </span>
               {locale !== 'zh' && (
