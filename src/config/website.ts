@@ -18,6 +18,7 @@ export const websiteConfig = {
   navigation: [
     { id: 'stack', labelKey: 'nav_stack' },
     { id: 'structure', labelKey: 'nav_structure' },
+    { id: 'journal', labelKey: 'nav_journal' },
     { id: 'faq', labelKey: 'nav_faq' },
   ],
 };

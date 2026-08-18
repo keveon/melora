@@ -20,7 +20,10 @@ export function homeHead(locale: AppLocale, requestOrigin?: string) {
   const title = message('site_title', locale);
   const description = message('site_description', locale);
   const pageUrl = absoluteSiteUrl(path, requestOrigin);
-  const imageUrl = absoluteSiteUrl('/og.png', requestOrigin);
+  const imageUrl = absoluteSiteUrl(
+    locale === 'zh' ? '/og-zh.png' : '/og.png',
+    requestOrigin
+  );
   return {
     meta: [
       { title },

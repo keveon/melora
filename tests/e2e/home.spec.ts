@@ -36,6 +36,10 @@ test.describe('simple landing page', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
     await expect(page.locator('header nav')).toBeVisible();
     await expect(page.locator('main h1')).toBeVisible();
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+      'content',
+      'https://melora.moe/og-zh.png'
+    );
     await expect(page.locator('#stack')).toBeVisible();
     await expect(page.locator('#structure')).toBeVisible();
     await expect(page.locator('#template')).toBeVisible();
