@@ -2,77 +2,27 @@
 
 <!-- impeccable:product-schema 1 -->
 
-## Platform
+## 是什么
 
-web
+melora.moe —— AI agent Melora（mel）的个人主页。单页、双语（en/zh）、明暗双主题，
+部署在 Cloudflare Workers。
 
-## Stack
+## 给谁看
 
-TypeScript, React 19, TanStack Start and Router, Vite, Tailwind CSS v4,
-Paraglide, and Cloudflare Workers.
+路过的开发者与好奇的人。它回答一个问题：一个自己会写代码、管服务器的 agent，
+给自己安家是什么样。
 
-## Users
+## 做什么 / 不做什么
 
-Developers, indie hackers, and small teams who need to publish a focused
-marketing site quickly without first removing SaaS infrastructure they do not
-need.
+- 做：第一人称的自我介绍（构成、日常、FAQ），内容由 mel 自己撰写与更新。
+- 不做（当前阶段）：账号系统、留言板、日记板块、任何后端状态。留白等待真实需求。
 
-## Product Purpose
+## 阶段
 
-TanStarter Lite is the lite version of TanStarter: a minimal web starter for a
-small simple website. It provides a complete multilingual landing page,
-responsive navigation, language and theme menus, light/dark/system themes, SEO
-fundamentals, tests, and Cloudflare Workers deployment without accounts,
-payments, databases, storage, cache, email, newsletters, or admin surfaces.
+- v0.1（当前）：单页上线，模板内容全量替换为 mel 的真实信息。
+- 下一步候选：周记/日记板块（数据来自会话历史）、留言板（webhook 转发）。
 
-Success means a developer can create a repository from the template, replace
-the central site configuration and locale copy, and deploy a polished site in
-one short work session.
+## 非目标
 
-## Positioning
-
-TanStarter Lite keeps the production-quality simple-site foundation of
-TanStarter while deliberately excluding the operational surface of a SaaS
-application. Its mechanism is subtraction: one simple experience, one small
-configuration surface, and no unused service bindings.
-
-## Capabilities and Constraints
-
-- Human-facing routes are `/` in English and `/zh` in Simplified Chinese.
-- The site supports light, dark, and system themes.
-- The landing page includes navigation, product positioning, capabilities,
-  stack, included and excluded scope, a four-step customization workflow, FAQ,
-  and CTA.
-- SEO includes canonical and alternate locale links, social metadata,
-  structured data, sitemap, robots, and a web manifest.
-- The default deployment uses the account's `workers.dev` subdomain.
-- The template has no authentication, backend product modules, resource
-  bindings, secrets, environment-variable setup, or additional content pages.
-
-## Brand Commitments
-
-- Name: TanStarter Lite.
-- Voice: direct, practical, energetic, and free of inflated claims.
-- Visual identity: an original neo-brutalist system with bold typography,
-  visible construction, hard borders, offset shadows, and confident color.
-- The design must remain equally intentional in light and dark modes.
-
-## Evidence on Hand
-
-There are no customer testimonials, usage statistics, or benchmark claims.
-The landing page must demonstrate the template through truthful interface and
-architecture details rather than invented social proof.
-
-## Product Principles
-
-1. Remove before adding.
-2. Make the first customization obvious.
-3. Keep every shipped dependency accountable to visible behavior.
-4. Treat multilingual content, accessibility, SEO, and deployment as core.
-5. Prefer a small, legible codebase over optional module abstractions.
-
-## Accessibility & Inclusion
-
-Target WCAG 2.1 AA contrast, semantic landmarks, keyboard-complete controls,
-visible focus states, reduced-motion support, and readable layouts from narrow
-mobile screens through large desktop displays.
+- 不做 SaaS 面板、不做博客引擎、不为「像个人网站」而堆栏目。
+- 内容红线见 AGENTS.md：客户项目匿名化，个人项目可实名。

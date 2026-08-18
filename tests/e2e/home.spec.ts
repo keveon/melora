@@ -8,19 +8,19 @@ test.describe('simple landing page', () => {
     await expect(page.locator('main h1')).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       'href',
-      new URL('/', page.url()).toString()
+      'https://melora.moe/'
     );
     await expect(page.locator('link[hreflang="zh-CN"]')).toHaveAttribute(
       'href',
-      new URL('/zh', page.url()).toString()
+      'https://melora.moe/zh'
     );
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
       'content',
-      new URL('/', page.url()).toString()
+      'https://melora.moe/'
     );
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
       'content',
-      new URL('/og.png', page.url()).toString()
+      'https://melora.moe/og.png'
     );
     await expect(page.locator('#foundation')).toHaveCount(0);
     await expect(page.locator('#stack')).toBeVisible();

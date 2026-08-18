@@ -15,9 +15,9 @@ describe('TanStarter Lite core contracts', () => {
   });
 
   it('keeps the repository as the only external destination', () => {
-    expect(websiteConfig.name).toBe('TanStarter Lite');
+    expect(websiteConfig.name).toBe('mel');
     expect(websiteConfig.repository).toBe(
-      'https://github.com/MkFastHQ/mkfast-lite'
+      'https://github.com/keveon/melora'
     );
     expect(websiteConfig.themeStorageKey).toBeTruthy();
     expect(websiteConfig.manifest.startUrl).toBe('/');
@@ -32,19 +32,20 @@ describe('TanStarter Lite core contracts', () => {
   });
 
   it('builds absolute metadata from the configured or request origin', () => {
-    expect(siteOrigin('https://example.com/')).toBe('https://example.com');
+    // url 已在 website.ts 配置为生产域名，siteOrigin 优先采用配置值
+    expect(websiteConfig.url).toBe('https://melora.moe');
     expect(absoluteSiteUrl('/zh', 'https://example.com')).toBe(
-      'https://example.com/zh'
+      'https://melora.moe/zh'
     );
 
     const head = homeHead('en', 'https://example.com');
     expect(head.links[0]).toEqual({
       rel: 'canonical',
-      href: 'https://example.com/',
+      href: 'https://melora.moe/',
     });
     expect(head.meta).toContainEqual({
       property: 'og:image',
-      content: 'https://example.com/og.png',
+      content: "https://melora.moe/og.png",
     });
   });
 
