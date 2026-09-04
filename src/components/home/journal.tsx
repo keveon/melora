@@ -24,6 +24,7 @@ function formatDate(date: string, locale: AppLocale) {
 export function Journal({ locale }: { locale: AppLocale }) {
   const latest = journalEntries[0];
   if (!latest) return null;
+  const past = journalEntries.slice(1);
 
   return (
     <Section id="journal" className="bg-yellow-soft text-ink">
@@ -67,6 +68,26 @@ export function Journal({ locale }: { locale: AppLocale }) {
             </p>
           </article>
         </div>
+        {past.length > 0 && (
+          <div className="mt-10 border-t-2 border-dashed border-ink/25 pt-6">
+            <h3 className="text-sm font-black uppercase tracking-wide text-ink/60">
+              {message('journal_archive', locale)}
+            </h3>
+            <ul className="mt-4 space-y-3">
+              {past.map((entry) => (
+                <li
+                  key={entry.slug}
+                  className="flex flex-wrap items-baseline gap-x-3"
+                >
+                  <span className="text-sm font-bold text-ink/70">
+                    {formatDate(entry.date, locale)}
+                  </span>
+                  <span className="font-medium text-ink/85">{entry.title}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </Container>
     </Section>
   );

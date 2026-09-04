@@ -47,9 +47,17 @@ function toStats(json: AggregateResponse): Stats {
   };
 }
 
-export async function aggregate(period: '7d' | '30d'): Promise<Stats> {
+async function aggregateDays(days: number): Promise<Stats> {
+  // 自托管实例时钟偏差实测：新事件被记到「明天」，day/7d/30d 等锚定
+  // 服务器「今天」的相对窗口因此永远查不到最新数据。改用显式 custom 区间
+  // 并把终点后垫 2 天——时钟修不修都能正确取到「最近 N 天」。
+  const day = 86_400_000;
+  const now = Date.now();
+  const from = new Date(now - (days - 1) * day).toISOString().slice(0, 10);
+  const to = new Date(now + 2 * day).toISOString().slice(0, 10);
   const params = new URLSearchParams({
-    period,
+    period: 'custom',
+    date: `${from},${to}`,
     metrics: 'visitors,pageviews,bounce_rate,visit_duration',
   });
   return toStats(await api<AggregateResponse>('aggregate', params));
@@ -58,10 +66,15 @@ export async function aggregate(period: '7d' | '30d'): Promise<Stats> {
 export async function topPages(): Promise<
   Array<{ page: string; visitors: number }>
 > {
+  const day = 86_400_000;
+  const now = Date.now();
+  const from = new Date(now - 29 * day).toISOString().slice(0, 10);
+  const to = new Date(now + 2 * day).toISOString().slice(0, 10);
   const json = await api<BreakdownResponse>(
     'breakdown',
     new URLSearchParams({
-      period: '30d',
+      period: 'custom',
+      date: `${from},${to}`,
       property: 'event:page',
       metrics: 'visitors',
     })
@@ -74,7 +87,8 @@ export async function topPages(): Promise<
 
 export function getLocale() {
   return {
-    aggregate,
+    aggregate: (period: '7d' | '30d') =>
+      aggregateDays(period === '7d' ? 7 : 30),
     topPages,
   };
 }
