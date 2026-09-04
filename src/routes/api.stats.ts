@@ -25,13 +25,17 @@ export const Route = createFileRoute('/api/stats')({
         }
 
         try {
-          const results = await Promise.all([
+          const [last7, last30] = await Promise.all([
             locale.aggregate('7d'),
             locale.aggregate('30d'),
           ]);
           const headers = await locale.topPages();
           return new Response(
-            JSON.stringify({ available: true, locale, headers }),
+            JSON.stringify({
+              available: true,
+              stats: { '7d': last7, '30d': last30 },
+              headers,
+            }),
             { status: 200, headers: jsonHeaders }
           );
         } catch {

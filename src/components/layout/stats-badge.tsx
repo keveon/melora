@@ -14,7 +14,7 @@ type Stats = {
 
 type StatsResponse = {
   available: boolean;
-  locale?: { '7d': Stats; '30d': Stats };
+  stats?: { '7d': Stats; '30d': Stats };
   headers?: Array<{ page: string; visitors: number }>;
 };
 
@@ -43,9 +43,9 @@ export function StatsBadge() {
     };
   }, []);
 
-  if (!data?.available || !data.locale) return null;
+  if (!data?.available || !data.stats) return null;
 
-  const last7 = data.locale['7d'];
+  const last7 = data.stats['7d'];
   const top = data.headers?.[0];
 
   return (
