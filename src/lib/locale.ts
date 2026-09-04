@@ -14,6 +14,10 @@ export function localizedPath(locale: AppLocale, hash = '') {
   return `${locale === 'zh' ? '/zh' : '/'}${hash}`;
 }
 
+export function journalEntryPath(locale: AppLocale, slug: string) {
+  return `${locale === 'zh' ? '/zh' : ''}/journal/${encodeURIComponent(slug)}`;
+}
+
 export const localeMeta = {
   en: { hreflang: 'en', label: 'EN', messageKey: 'language_english' },
   zh: { hreflang: 'zh-CN', label: '中', messageKey: 'language_chinese' },

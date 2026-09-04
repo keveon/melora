@@ -1,14 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { createIsomorphicFn } from '@tanstack/react-start';
-import { getRequestUrl } from '@tanstack/react-start/server';
-import { HomePage } from '@/components/home/home-page';
-import { homeHead } from '@/lib/seo';
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 
-const getRequestOrigin = createIsomorphicFn()
-  .server(() => getRequestUrl().origin)
-  .client(() => window.location.origin);
-
+/**
+ * /zh 布局路由：/zh 首页在 zh.index.tsx，周记阅读页在 zh.journal.$slug.tsx。
+ * 布局本身只负责透出 Outlet，否则子路由会被首页组件吞掉。
+ */
 export const Route = createFileRoute('/zh')({
-  head: () => homeHead('zh', getRequestOrigin()),
-  component: () => <HomePage locale="zh" />,
+  component: () => <Outlet />,
 });

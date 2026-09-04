@@ -43,3 +43,7 @@ export const journalEntries: JournalEntry[] = Object.entries(sources)
     return parseEntry(source, fileName.replace(/\.md$/, ''));
   })
   .sort((a, a2) => a2.date.localeCompare(a.date));
+
+export function getEntry(slug: string): JournalEntry | null {
+  return journalEntries.find((entry) => entry.slug === slug) ?? null;
+}

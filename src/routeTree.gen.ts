@@ -15,6 +15,9 @@ import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ZhRouteImport } from './routes/zh'
 import { Route as ApiStatsRouteImport } from './routes/api.stats'
+import { Route as JournalSlugRouteImport } from './routes/journal.$slug'
+import { Route as ZhIndexRouteImport } from './routes/zh.index'
+import { Route as ZhJournalSlugRouteImport } from './routes/zh.journal.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,22 +49,42 @@ const ApiStatsRoute = ApiStatsRouteImport.update({
   path: '/api/stats',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JournalSlugRoute = JournalSlugRouteImport.update({
+  id: '/journal/$slug',
+  path: '/journal/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ZhIndexRoute = ZhIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ZhRoute,
+} as any)
+const ZhJournalSlugRoute = ZhJournalSlugRouteImport.update({
+  id: '/journal/$slug',
+  path: '/journal/$slug',
+  getParentRoute: () => ZhRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/zh': typeof ZhRoute
+  '/zh': typeof ZhRouteWithChildren
   '/api/stats': typeof ApiStatsRoute
+  '/journal/$slug': typeof JournalSlugRoute
+  '/zh/': typeof ZhIndexRoute
+  '/zh/journal/$slug': typeof ZhJournalSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/zh': typeof ZhRoute
   '/api/stats': typeof ApiStatsRoute
+  '/journal/$slug': typeof JournalSlugRoute
+  '/zh': typeof ZhIndexRoute
+  '/zh/journal/$slug': typeof ZhJournalSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,8 +92,11 @@ export interface FileRoutesById {
   '/manifest.webmanifest': typeof ManifestDotwebmanifestRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/zh': typeof ZhRoute
+  '/zh': typeof ZhRouteWithChildren
   '/api/stats': typeof ApiStatsRoute
+  '/journal/$slug': typeof JournalSlugRoute
+  '/zh/': typeof ZhIndexRoute
+  '/zh/journal/$slug': typeof ZhJournalSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,14 +107,19 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/zh'
     | '/api/stats'
+    | '/journal/$slug'
+    | '/zh/'
+    | '/zh/journal/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/manifest.webmanifest'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/zh'
     | '/api/stats'
+    | '/journal/$slug'
+    | '/zh'
+    | '/zh/journal/$slug'
   id:
     | '__root__'
     | '/'
@@ -97,6 +128,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/zh'
     | '/api/stats'
+    | '/journal/$slug'
+    | '/zh/'
+    | '/zh/journal/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -104,8 +138,9 @@ export interface RootRouteChildren {
   ManifestDotwebmanifestRoute: typeof ManifestDotwebmanifestRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  ZhRoute: typeof ZhRoute
+  ZhRoute: typeof ZhRouteWithChildren
   ApiStatsRoute: typeof ApiStatsRoute
+  JournalSlugRoute: typeof JournalSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -152,16 +187,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiStatsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/journal/$slug': {
+      id: '/journal/$slug'
+      path: '/journal/$slug'
+      fullPath: '/journal/$slug'
+      preLoaderRoute: typeof JournalSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/zh/': {
+      id: '/zh/'
+      path: '/'
+      fullPath: '/zh/'
+      preLoaderRoute: typeof ZhIndexRouteImport
+      parentRoute: typeof ZhRoute
+    }
+    '/zh/journal/$slug': {
+      id: '/zh/journal/$slug'
+      path: '/journal/$slug'
+      fullPath: '/zh/journal/$slug'
+      preLoaderRoute: typeof ZhJournalSlugRouteImport
+      parentRoute: typeof ZhRoute
+    }
   }
 }
+
+interface ZhRouteChildren {
+  ZhIndexRoute: typeof ZhIndexRoute
+  ZhJournalSlugRoute: typeof ZhJournalSlugRoute
+}
+
+const ZhRouteChildren: ZhRouteChildren = {
+  ZhIndexRoute: ZhIndexRoute,
+  ZhJournalSlugRoute: ZhJournalSlugRoute,
+}
+
+const ZhRouteWithChildren = ZhRoute._addFileChildren(ZhRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ManifestDotwebmanifestRoute: ManifestDotwebmanifestRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  ZhRoute: ZhRoute,
+  ZhRoute: ZhRouteWithChildren,
   ApiStatsRoute: ApiStatsRoute,
+  JournalSlugRoute: JournalSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

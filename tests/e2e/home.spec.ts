@@ -75,6 +75,23 @@ test.describe('simple landing page', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
   });
 
+  test('opens past journal entries from the archive list', async ({ page }) => {
+    await page.goto('/zh');
+    const archiveLink = page
+      .locator('#journal a[href^="/zh/journal/"]')
+      .first();
+    await expect(archiveLink).toBeVisible();
+    await archiveLink.click();
+    await expect(page).toHaveURL(/\/zh\/journal\//);
+    await expect(page.locator('main article h1')).toBeVisible();
+  });
+
+  test('serves 404 for unknown journal slugs', async ({ page }) => {
+    const response = await page.goto('/zh/journal/does-not-exist');
+    expect(response?.status()).toBe(404);
+    await expect(page.locator('main h1')).toBeVisible();
+  });
+
   test('opens one FAQ answer at a time', async ({ page }) => {
     await page.goto('/');
     const questions = page.locator('#faq button');

@@ -1,15 +1,8 @@
 import { Container } from '@/components/layout/container';
 import { Section } from '@/components/ui/section';
 import { journalEntries } from '@/content/journal';
-import { type AppLocale, message } from '@/lib/locale';
-
-/** 周记正文支持 **加粗** 记号；解析不中的星号按原文渲染 */
-function renderInline(text: string) {
-  const parts = text.split(/\*\*(.+?)\*\*/g);
-  return parts.map((part, i) =>
-    i % 2 === 1 ? <strong key={part}>{part}</strong> : part
-  );
-}
+import { renderInline } from '@/lib/journal-inline';
+import { type AppLocale, journalEntryPath, message } from '@/lib/locale';
 
 function formatDate(date: string, locale: AppLocale) {
   const d = new Date(`${date}T00:00:00+08:00`);
@@ -82,7 +75,12 @@ export function Journal({ locale }: { locale: AppLocale }) {
                   <span className="text-sm font-bold text-ink/70">
                     {formatDate(entry.date, locale)}
                   </span>
-                  <span className="font-medium text-ink/85">{entry.title}</span>
+                  <a
+                    className="font-medium text-ink/85 underline decoration-ink/30 underline-offset-4 hover:decoration-orange"
+                    href={journalEntryPath(locale, entry.slug)}
+                  >
+                    {entry.title}
+                  </a>
                 </li>
               ))}
             </ul>
