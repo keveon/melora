@@ -1,4 +1,5 @@
 import { Container } from '@/components/layout/container';
+import { StatsBadge } from '@/components/layout/stats-badge';
 import { Logo } from '@/components/shared/logo';
 import { websiteConfig } from '@/config/website';
 import { type AppLocale, message } from '@/lib/locale';
@@ -21,6 +22,7 @@ export function Footer({ locale }: { locale: AppLocale }) {
           {locale === 'zh' ? '。' : '. '}
           {message('footer_rights', locale)}
         </p>
+        <StatsBadge />
       </Container>
     </footer>
   );

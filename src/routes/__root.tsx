@@ -26,6 +26,8 @@ export const Route = createRootRoute({
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
       { rel: 'manifest', href: '/manifest.webmanifest' },
       { rel: 'apple-touch-icon', href: '/icons/icon-192.png' },
+      // Plausible 隐私友好统计（自托管，无 cookie、不采集个人数据）
+      { rel: 'preconnect', href: 'https://analytics.keveon.com' },
     ],
   }),
   shellComponent: RootDocument,
@@ -98,6 +100,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang={localeMeta[locale].hreflang} suppressHydrationWarning>
       <head>
         <script>{themeScript}</script>
+        {/* Plausible 隐私友好统计（自托管）：key 在 pla-r77Ix… 的脚本 + init 调用，
+            只在浏览器执行，不涉及任何服务端凭据。
+            注：刻意不加 SRI/integrity——自托管实例升级会原地更换脚本内容，
+            钉死哈希会让统计静默失效（Plausible 官方集成模式亦无 SRI）。 */}
+        <script
+          async
+          src="https://analytics.keveon.com/js/pa-r77Ix6SUlJNYicJ0c58vp.js"
+        />
+        <script>{`window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`}</script>
         <HeadContent />
       </head>
       <body>

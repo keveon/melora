@@ -14,6 +14,7 @@ import { Route as ManifestDotwebmanifestRouteImport } from './routes/manifest[.]
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ZhRouteImport } from './routes/zh'
+import { Route as ApiStatsRouteImport } from './routes/api.stats'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +41,11 @@ const ZhRoute = ZhRouteImport.update({
   path: '/zh',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiStatsRoute = ApiStatsRouteImport.update({
+  id: '/api/stats',
+  path: '/api/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/zh': typeof ZhRoute
+  '/api/stats': typeof ApiStatsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/zh': typeof ZhRoute
+  '/api/stats': typeof ApiStatsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,25 @@ export interface FileRoutesById {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/zh': typeof ZhRoute
+  '/api/stats': typeof ApiStatsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/manifest.webmanifest' | '/robots.txt' | '/sitemap.xml' | '/zh'
+    | '/'
+    | '/manifest.webmanifest'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/zh'
+    | '/api/stats'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/manifest.webmanifest' | '/robots.txt' | '/sitemap.xml' | '/zh'
+  to:
+    | '/'
+    | '/manifest.webmanifest'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/zh'
+    | '/api/stats'
   id:
     | '__root__'
     | '/'
@@ -76,6 +96,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/zh'
+    | '/api/stats'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -84,6 +105,7 @@ export interface RootRouteChildren {
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ZhRoute: typeof ZhRoute
+  ApiStatsRoute: typeof ApiStatsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -123,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ZhRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/stats': {
+      id: '/api/stats'
+      path: '/api/stats'
+      fullPath: '/api/stats'
+      preLoaderRoute: typeof ApiStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -132,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ZhRoute: ZhRoute,
+  ApiStatsRoute: ApiStatsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

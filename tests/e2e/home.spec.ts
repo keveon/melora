@@ -40,6 +40,8 @@ test.describe('simple landing page', () => {
       'content',
       'https://melora.moe/og-zh.png'
     );
+    await expect(page.locator('#journal')).toBeVisible();
+    await expect(page.locator('#journal article')).not.toContainText('**');
     await expect(page.locator('#stack')).toBeVisible();
     await expect(page.locator('#structure')).toBeVisible();
     await expect(page.locator('#template')).toBeVisible();

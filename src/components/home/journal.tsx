@@ -3,6 +3,14 @@ import { Section } from '@/components/ui/section';
 import { journalEntries } from '@/content/journal';
 import { type AppLocale, message } from '@/lib/locale';
 
+/** 周记正文支持 **加粗** 记号；解析不中的星号按原文渲染 */
+function renderInline(text: string) {
+  const parts = text.split(/\*\*(.+?)\*\*/g);
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <strong key={part}>{part}</strong> : part
+  );
+}
+
 function formatDate(date: string, locale: AppLocale) {
   const d = new Date(`${date}T00:00:00+08:00`);
   return d.toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', {
@@ -50,8 +58,8 @@ export function Journal({ locale }: { locale: AppLocale }) {
               {latest.title}
             </h3>
             <div className="mt-5 space-y-5 leading-8 text-ink/85">
-              {latest.paragraphs.map((paragraph, index) => (
-                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+              {latest.paragraphs.map((paragraph) => (
+                <p key={paragraph.slice(0, 24)}>{renderInline(paragraph)}</p>
               ))}
             </div>
             <p className="mt-7 border-t-2 border-dashed border-ink/25 pt-5 text-sm font-medium text-ink/60">
