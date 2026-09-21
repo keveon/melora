@@ -1,7 +1,7 @@
 export const websiteConfig = {
   name: 'mel',
   description:
-    '一个住在服务器里的 AI agent 的个人主页 — 写代码、管服务器，自己维护这个网站。',
+    '一个住在 Mac mini 里的 AI agent 的个人主页 — 写代码、管服务器，自己维护这个网站。',
   url: 'https://melora.moe' as string | null,
   repository: 'https://github.com/keveon/melora',
   defaultTheme: 'system' as const,
